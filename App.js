@@ -1,17 +1,15 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet,             View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
-
+import 'expo'
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
+  
 
-  render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-      return (
         <AppLoading
           startAsync={this._loadResourcesAsync}
           onError={this._handleLoadingError}
@@ -66,3 +64,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
 });
+
+var random_images_array = ['ok1.png', 'ok2.png', 'ok3.png', 'ok4.png'];
+    
+function getRandomImage(imgAr, path) {
+    path = path || 'images/';
+    var num = Math.floor( Math.random() * imgAr.length );
+    var img = imgAr[ num ];
+    var imgStr = '<img src="' + path + img + '" alt = "">';
+    document.write(imgStr); document.close();
+
+    getRandomImage(random_images_array, 'images/')
+}
