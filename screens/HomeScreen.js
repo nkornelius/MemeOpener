@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View,Alert, Button
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -17,196 +17,61 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
-  render() {
-    return (
-      var path = 'C:\Users\Noah\memeopener\assets\images',
-      files = ['ok.png', 'ok1.png', 'ok2.png', 'ok3.pngp', '5.php', '6.php'],
+  state = {
+    //currentImage: 'initial'
+  }
+
+  _generate = () => {
+    //Alert.alert("hey")
+      var path = '../assets/images',
+      //files = ['ok.png', 'ok1.png', 'ok2.png', 'ok3.png', 'ok4.png', 'ok5.png'],
+      files = ['ok','ok2', 'ok3', 'ok4', 'ok5', 'ok6', 'ok7', 'ok8', 'ok9']
       i = Math.floor(Math.random()*files.length);
-      var url = (path+files[i]);
-      $("#my-div").load(url); 
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+      //var url = (path+"/"+files[0]);
+      this.setState({currentImage: files[i]})
+  }
+
+  render() {
+    const images = {
+      ok: require('../assets/images/ok.png'),
+      ok2: require('../assets/images/ok2.png'),
+      ok3: require('../assets/images/ok3.png'),
+      ok4: require('../assets/images/ok4.png'),
+      ok5: require('../assets/images/ok5.png'),
+      ok6: require('../assets/images/ok6.png'),
+      ok7: require('../assets/images/ok7.png'),
+      ok8: require('../assets/images/ok8.png'),
+      ok9: require('../assets/images/ok9.png')
+    }
+
+     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/ok.png')
-                  : require('../assets/images/ok.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}></Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}></MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-             
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}></Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}></Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}></MonoText>
-          </View>
+        <View style={styles.contentContainer}>
+          <Image style={styles.image}source={images[this.state.currentImage]} />
+          <Button onPress={this._generate}
+            title="Generate"
+            color="#FF0000"
+            accessibilityLabel="Press me to make a meme" />
         </View>
       </View>
-    );
+     ) 
   }
-
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
+    justifyContent: 'flex-end' 
   },
   contentContainer: {
-    paddingTop: 30,
+    alignItems:"center"
   },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-});
+  image:{
+    width: 300,
+   height: 400
+   
+
+  }
+
+
+})
